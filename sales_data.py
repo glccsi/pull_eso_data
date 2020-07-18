@@ -4,12 +4,10 @@ import time
 import shutil
 import os
 
-#Global variables
-filelua = open("D:/Programming/pull_eso_data/ArkadiusTradeToolsSalesData01.txt")
-f = open("D:/Programming/pull_eso_data/exported_sales.csv","w")
-
 #Create a list of lines from the source file
 def write_sales():
+    filelua = open("D:/Programming/pull_eso_data/ArkadiusTradeToolsSalesData01.txt")
+    f_sales = open("D:/Programming/pull_eso_data/exported_sales.csv","w")
     lines = filelua.readlines() #Creates a list which contains the lines of the source file
     number_of_commas = 0 #Number of commas in a line
 
@@ -27,28 +25,28 @@ def write_sales():
             x_starter = string.find('= ') + 2
 
             for x in range(x_starter,len_of_line-1):
-                f.write(string[x])
+                f_sales.write(string[x])
                 if string[x] == ",":
                     number_of_commas += 1
 
             if number_of_commas%9 == 0:
-                f.write("\n")
+                f_sales.write("\n")
 
-#Close the opened files
-def close_files():
-    f.close()
+    f_sales.close()
     filelua.close()
+
+
 
 #Open the original file, copy and paste it into program's directory
 def import_sales():
     
     original_data = r'C:\Users\Imi-PC\Documents\Elder Scrolls Online\live\SavedVariables\ArkadiusTradeToolsSalesData01.lua'
-    target_data = r'D:\Programming\ESOP\ArkadiusTradeToolsSalesData01.lua'
+    target_data = r'D:\Programming\pull_eso_data\ArkadiusTradeToolsSalesData01.lua'
     #call shutil module's copyfile function, to copy the original_data to target_data
     shutil.copyfile(original_data, target_data)
 
     #file's type from lua to txt
-    os.rename(r'D:\Programming\ESOP\ArkadiusTradeToolsSalesData01.lua',r'D:\Programming\ESOP\ArkadiusTradeToolsSalesData01'+'.txt')
+    os.rename(r'D:\Programming\pull_eso_data\ArkadiusTradeToolsSalesData01.lua',r'D:\Programming\pull_eso_data\ArkadiusTradeToolsSalesData01'+'.txt')
 
 #Convert epoch time to human readable
 def convert_epoch_to_human():
@@ -58,7 +56,6 @@ def convert_epoch_to_human():
 #Main program
 def main():
     write_sales()
-    close_files()
 
 main()
 convert_epoch_to_human()
